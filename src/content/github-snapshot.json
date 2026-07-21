@@ -1,0 +1,307 @@
+{
+  "capturedAt": "2026-07-21",
+  "source": "GitHub REST API v3 (unauthenticated), verified against repository contents",
+  "profile": {
+    "login": "xdziuba",
+    "name": "Paweł Dziuba",
+    "url": "https://github.com/xdziuba",
+    "createdAt": "2023-10-04",
+    "publicRepos": 18,
+    "ownedRepos": 15,
+    "forkedRepos": 3
+  },
+  "languages": [
+    {
+      "name": "TypeScript",
+      "bytes": 506234,
+      "share": 50.6
+    },
+    {
+      "name": "C#",
+      "bytes": 153406,
+      "share": 15.3
+    },
+    {
+      "name": "Jupyter Notebook",
+      "bytes": 101653,
+      "share": 10.2
+    },
+    {
+      "name": "JavaScript",
+      "bytes": 83912,
+      "share": 8.4
+    },
+    {
+      "name": "SCSS",
+      "bytes": 49540,
+      "share": 5
+    },
+    {
+      "name": "Python",
+      "bytes": 27597,
+      "share": 2.8
+    },
+    {
+      "name": "TSQL",
+      "bytes": 23393,
+      "share": 2.3
+    },
+    {
+      "name": "HTML",
+      "bytes": 22174,
+      "share": 2.2
+    },
+    {
+      "name": "CSS",
+      "bytes": 18759,
+      "share": 1.9
+    },
+    {
+      "name": "Vue",
+      "bytes": 10010,
+      "share": 1
+    }
+  ],
+  "languageNote": "Measured in bytes across original (non-fork) repositories. Excludes PanTadeusz, a static site publishing ~762 KB of public-domain poetry, whose HTML volume would otherwise outweigh every other repository combined.",
+  "repos": [
+    {
+      "name": "xdziuba",
+      "url": "https://github.com/xdziuba/xdziuba",
+      "language": null,
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "main",
+      "createdAt": "2023-10-04",
+      "updatedAt": "2026-07-21",
+      "topics": [
+        "config",
+        "github-config"
+      ]
+    },
+    {
+      "name": "portfolio",
+      "url": "https://github.com/xdziuba/portfolio",
+      "language": null,
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "main",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21",
+      "topics": []
+    },
+    {
+      "name": "LumaShell",
+      "url": "https://github.com/xdziuba/LumaShell",
+      "language": "TypeScript",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "main",
+      "createdAt": "2026-07-16",
+      "updatedAt": "2026-07-19",
+      "topics": []
+    },
+    {
+      "name": "GeoPic",
+      "url": "https://github.com/xdziuba/GeoPic",
+      "language": "HTML",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "main",
+      "createdAt": "2026-04-30",
+      "updatedAt": "2026-05-09",
+      "topics": []
+    },
+    {
+      "name": "PWA",
+      "url": "https://github.com/xdziuba/PWA",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "main",
+      "createdAt": "2026-04-11",
+      "updatedAt": "2026-04-19",
+      "topics": []
+    },
+    {
+      "name": "zaawansowane-bazy-danych",
+      "url": "https://github.com/xdziuba/zaawansowane-bazy-danych",
+      "language": "TSQL",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "master",
+      "createdAt": "2025-12-17",
+      "updatedAt": "2026-01-22",
+      "topics": []
+    },
+    {
+      "name": "what2buy",
+      "url": "https://github.com/xdziuba/what2buy",
+      "language": "JavaScript",
+      "stars": 1,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "main",
+      "createdAt": "2025-10-12",
+      "updatedAt": "2026-01-12",
+      "topics": [
+        "axios",
+        "brightdata",
+        "chatgpt",
+        "docker",
+        "docker-compose",
+        "docker-container",
+        "fastapi",
+        "full-stack",
+        "langchain",
+        "language-model",
+        "mcp",
+        "nginx",
+        "openai",
+        "pinia",
+        "pydantic",
+        "python3",
+        "rest-api",
+        "vue3",
+        "vuejs"
+      ]
+    },
+    {
+      "name": "piu-labs",
+      "url": "https://github.com/xdziuba/piu-labs",
+      "language": "CSS",
+      "stars": 0,
+      "forks": 0,
+      "isFork": true,
+      "defaultBranch": "main",
+      "createdAt": "2025-10-20",
+      "updatedAt": "2025-12-11",
+      "topics": []
+    },
+    {
+      "name": "CarPartsEShop",
+      "url": "https://github.com/xdziuba/CarPartsEShop",
+      "language": "C#",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "master",
+      "createdAt": "2025-06-06",
+      "updatedAt": "2025-06-20",
+      "topics": []
+    },
+    {
+      "name": "EShopService",
+      "url": "https://github.com/xdziuba/EShopService",
+      "language": "C#",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "master",
+      "createdAt": "2025-03-26",
+      "updatedAt": "2025-05-28",
+      "topics": []
+    },
+    {
+      "name": "PP-Simulator",
+      "url": "https://github.com/xdziuba/PP-Simulator",
+      "language": "C#",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "master",
+      "createdAt": "2024-12-12",
+      "updatedAt": "2025-01-19",
+      "topics": []
+    },
+    {
+      "name": "PP-Types",
+      "url": "https://github.com/xdziuba/PP-Types",
+      "language": "C#",
+      "stars": 0,
+      "forks": 0,
+      "isFork": true,
+      "defaultBranch": "master",
+      "createdAt": "2024-11-28",
+      "updatedAt": "2024-11-28",
+      "topics": []
+    },
+    {
+      "name": "PP-Calculator",
+      "url": "https://github.com/xdziuba/PP-Calculator",
+      "language": "C#",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "master",
+      "createdAt": "2024-11-19",
+      "updatedAt": "2024-11-19",
+      "topics": []
+    },
+    {
+      "name": "CeneoScraperN11",
+      "url": "https://github.com/xdziuba/CeneoScraperN11",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "main",
+      "createdAt": "2024-04-20",
+      "updatedAt": "2024-06-09",
+      "topics": []
+    },
+    {
+      "name": "PyRadio",
+      "url": "https://github.com/xdziuba/PyRadio",
+      "language": "Python",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "main",
+      "createdAt": "2024-04-21",
+      "updatedAt": "2024-06-08",
+      "topics": []
+    },
+    {
+      "name": "Simple-MRP-System",
+      "url": "https://github.com/xdziuba/Simple-MRP-System",
+      "language": "Python",
+      "stars": 2,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "main",
+      "createdAt": "2024-04-25",
+      "updatedAt": "2024-04-26",
+      "topics": []
+    },
+    {
+      "name": "PanTadeusz",
+      "url": "https://github.com/xdziuba/PanTadeusz",
+      "language": "HTML",
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "defaultBranch": "main",
+      "createdAt": "2024-03-01",
+      "updatedAt": "2024-03-23",
+      "topics": []
+    },
+    {
+      "name": "pp1",
+      "url": "https://github.com/xdziuba/pp1",
+      "language": null,
+      "stars": 0,
+      "forks": 0,
+      "isFork": true,
+      "defaultBranch": "master",
+      "createdAt": "2023-10-28",
+      "updatedAt": "2023-10-27",
+      "topics": []
+    }
+  ]
+}
