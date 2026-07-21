@@ -1,0 +1,60 @@
+# Portfolio behind an existing Caddy reverse proxy.
+#
+# This host already runs Caddy on :80/:443 for another project, so the portfolio
+# publishes no ports at all — it joins Caddy's network and is reached by container
+# name. Nothing about the existing stack has to change except one Caddyfile block.
+#
+#   docker load < portfolio.tar.gz
+#   docker compose up -d
+#
+# If you ever move to a host with no reverse proxy, the Cloudflare Tunnel variant
+# is documented in README.md.
+
+services:
+  portfolio:
+    image: portfolio:latest
+    container_name: portfolio
+    restart: unless-stopped
+
+    # Runtime secrets, read from .env beside this file. NEXT_PUBLIC_SITE_URL is
+    # deliberately absent: it is baked in at image build time, not here.
+    environment:
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      CONTACT_TO_EMAIL: ${CONTACT_TO_EMAIL:-}
+      CONTACT_FROM_EMAIL: ${CONTACT_FROM_EMAIL:-Portfolio <onboarding@resend.dev>}
+      # Keeps V8's heap well under the container limit below, so Node trims its
+      # own garbage instead of growing until the kernel intervenes.
+      NODE_OPTIONS: --max-old-space-size=192
+
+    # Reachable only from the proxy network — never published to the host.
+    expose:
+      - "3000"
+
+    # A hard ceiling matters on this box: ~370 MB free and no swap, shared with
+    # n8n and Postgres. Without a limit a runaway here would get *something else*
+    # OOM-killed; with it, only this container dies and restart policy recovers.
+    mem_limit: 256m
+    memswap_limit: 256m
+
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/en').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
+    # The network Caddy is already attached to. Confirm the exact name with:
+    #   docker inspect notmybeer-caddy-1 --format '{{json .NetworkSettings.Networks}}'
+    name: ${PROXY_NETWORK:-notmybeer_default}
