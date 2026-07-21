@@ -1,0 +1,4 @@
+# Keeps public/ present in a fresh clone.
+# The site currently ships no static assets — the icon is generated from
+# src/app/icon.svg and every graphic is inline SVG — but the Dockerfile copies
+# this directory, and git does not track empty ones.
