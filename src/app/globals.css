@@ -1,0 +1,317 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens — "Signal chain" identity
+   Palette is cold-only (ice -> cyan -> electric blue). Every foreground value
+   below was validated against the base background with a WCAG 2.2 contrast
+   script; ratios are noted so future edits do not silently regress them.
+   ========================================================================== */
+
+@theme {
+  /* --- surfaces ------------------------------------------------------- */
+  --color-bg: #080a11;
+  --color-bg-elev: #0e1119;
+  --color-bg-sunken: #05070c;
+
+  /* --- foreground ----------------------------------------------------- */
+  --color-text: #e8edf7; /* 16.85:1 AAA */
+  --color-muted: #95a2ba; /*  7.68:1 AAA */
+  --color-faint: #78859e; /*  5.32:1 AA  */
+
+  /* --- accent (cold contrast gradient) -------------------------------- */
+  --color-ice: #7fe9ff; /* 14.13:1 AAA */
+  --color-accent: #2fd3f5; /* 11.07:1 AAA */
+  --color-accent-blue: #5b85ff; /*  5.88:1 AA  — text-safe */
+  --color-accent-deep: #3c6bff; /*  4.46:1     — graphics only, never body text */
+
+  /* --- lines ---------------------------------------------------------- */
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.14);
+  --color-glass: rgba(232, 237, 247, 0.04);
+
+  /* --- motion --------------------------------------------------------- */
+  --ease-signal: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Fonts must live in `@theme inline` so the generated utilities emit
+   `font-family: var(--font-…)` directly, resolving the next/font variables set
+   on <html>. A plain `@theme` block would snapshot the value at :root instead. */
+@theme inline {
+  --font-display: var(--font-space-grotesk), "Segoe UI", system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Segoe UI", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "Cascadia Mono", monospace;
+}
+
+:root {
+  /* radii — sharp and instrument-like, never pill-shaped */
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+
+  /* motion durations */
+  --dur-fast: 140ms;
+  --dur-base: 240ms;
+  --dur-slow: 460ms;
+
+  /* glass */
+  --blur-panel: 14px;
+  --blur-nav: 18px;
+
+  /* rhythm */
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --section-y: clamp(5rem, 11vh, 9rem);
+  --measure: 68ch;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  scroll-behavior: smooth;
+  /* keep anchored sections clear of the fixed nav */
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* The measurement field: a fine technical grid + carrier haze.
+   Fixed, non-interactive, and cheap — no animation, no repaint cost. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 78%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background:
+    radial-gradient(ellipse 60% 42% at 50% -8%, rgba(47, 211, 245, 0.09), transparent 70%),
+    radial-gradient(ellipse 44% 30% at 88% 8%, rgba(60, 107, 255, 0.06), transparent 72%);
+}
+
+/* Both decorative layers are dropped on small screens.
+   A fixed, masked element is rasterised on its own compositing layer, and on a
+   throttled phone the pair accounted for the largest single block of style and
+   layout time — for a texture that is barely perceptible at that size. */
+@media (max-width: 767px) {
+  body::before {
+    display: none;
+  }
+
+  body::after {
+    mask-image: none;
+    background: radial-gradient(ellipse 90% 40% at 50% 0%, rgba(47, 211, 245, 0.07), transparent 70%);
+  }
+}
+
+::selection {
+  background: rgba(47, 211, 245, 0.24);
+  color: var(--color-text);
+}
+
+/* ==========================================================================
+   Focus — always visible, never removed
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
+}
+
+/* Only suppress the ring for pointer users who did not tab here. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ==========================================================================
+   Components
+   ========================================================================== */
+
+@layer components {
+  /* Glass is used ONLY where something genuinely floats over content:
+     the nav, project detail surfaces, and small status panels. */
+  .glass {
+    background: var(--color-glass);
+    border: 1px solid var(--color-line);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+      0 18px 44px -28px rgba(0, 0, 0, 0.9);
+  }
+
+  @supports (backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px)) {
+    .glass {
+      -webkit-backdrop-filter: blur(var(--blur-panel)) saturate(140%);
+      backdrop-filter: blur(var(--blur-panel)) saturate(140%);
+    }
+  }
+
+  /* Without backdrop-filter the panel must still read as a distinct layer,
+     so fall back to an opaque elevated surface rather than a washed-out box. */
+  @supports not ((backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))) {
+    .glass {
+      background: color-mix(in srgb, var(--color-bg-elev) 94%, white);
+    }
+  }
+
+  /* Phones take the same opaque treatment even where the filter is supported.
+     Live backdrop blur is re-rasterised as the page scrolls behind it, and it was
+     a measurable share of style and layout time on a throttled device. The opaque
+     surface is a deliberate design fallback, not a degraded one. */
+  @media (max-width: 767px) {
+    .glass {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--color-bg-elev) 94%, white);
+    }
+  }
+
+  /* Monospace metadata: repo names, languages, dates, channel labels. */
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+  }
+
+  /* A single hairline with a node on it — the recurring "signal path" motif. */
+  .rule-node {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--color-line-strong) 12%,
+      var(--color-line-strong) 88%,
+      transparent
+    );
+  }
+
+  .rule-node::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    translate: 0 -50%;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 10px 1px rgba(47, 211, 245, 0.6);
+  }
+}
+
+/* Headline reveal.
+   Deliberately CSS rather than JavaScript: the masked line is clipped out of view
+   until it animates, so while this waited on hydration it was the largest
+   contentful paint and pushed mobile LCP to 3.9s. As CSS it starts at first paint,
+   survives with JavaScript disabled, and the reduced-motion block below collapses
+   it to nothing. */
+@keyframes reveal-line {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.reveal-line {
+  display: block;
+  animation: reveal-line 0.75s var(--ease-signal) both;
+}
+
+/* Entry animation for everything above the fold.
+   Measured: the hero paragraph is the largest contentful paint, and while it was a
+   scroll-triggered JavaScript animation it stayed invisible until hydration had
+   finished — LCP 3.5s on a throttled phone. Driven by CSS it paints with the first
+   frame. Below-the-fold sections still use the JS reveal, which needs an observer. */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal-up {
+  animation: reveal-up 0.6s var(--ease-signal) both;
+}
+
+@layer utilities {
+  .text-gradient-signal {
+    background: linear-gradient(100deg, var(--color-ice), var(--color-accent) 46%, var(--color-accent-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .container-rail {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+}
+
+/* ==========================================================================
+   Reduced motion — disable movement, keep meaning
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Load-bearing, not cosmetic.
+     Entry animations are server-rendered with their initial hidden state as an
+     inline style. Relying on the JS reduced-motion branch to undo that was
+     measured to fail: 39 of 41 elements stayed at opacity 0 permanently, so the
+     page was effectively blank for exactly the users this rule protects.
+     `!important` overrides the inline style no matter what the script does. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
